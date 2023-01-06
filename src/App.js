@@ -7,14 +7,21 @@ function App() {
   const [fiveContacts, setFiveContacts] = useState(Array);
 
   const addRandom = () => {
-    let random = Math.floor(Math.random() * contacts.length);
+    let contactId = fiveContacts.map((e) => e.id)
+    let contactRandom = contacts.filter((e) => {
+      if(!contactId.includes(e.id)){
+        return e
+      }
+    })
+    let random = Math.floor(Math.random() * contactRandom.length);
     const arrayCopy = [...fiveContacts];
-    arrayCopy.push(contacts[random]);
+    arrayCopy.push(contactRandom[random]);
     setFiveContacts(arrayCopy);
   };
 
   const sortByPopularity = () => {
-    const popularity = [...fiveContacts].sort(function (a, b) {
+    const popularityArray = [...fiveContacts]
+    const popularity = [...popularityArray].sort(function (a, b) {
       return a.popularity < b.popularity ? 1 : -1;
     });
     setFiveContacts(popularity);
@@ -36,11 +43,13 @@ function App() {
   };
 
   return (
-    <div>
+    <div className = "table">
       <h1>IronContacts</h1>
+      <div className = "buttons">
       <button onClick={addRandom}>Add Random Contact</button>
       <button onClick={sortByPopularity}>Sort by popularity</button>
       <button onClick={sortByName}>Sort by name</button>
+      </div>
       <table>
         <thead>
           <tr>
