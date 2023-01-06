@@ -10,7 +10,8 @@ function App() {
     let random = Math.floor(Math.random() * contacts.length);
     const arrayCopy = [...fiveContacts];
     arrayCopy.push(contacts[random]);
-    setFiveContacts(arrayCopy)}
+    setFiveContacts(arrayCopy);
+  };
 
   const sortByPopularity = () => {
     const popularity = [...fiveContacts].sort(function (a, b) {
@@ -27,6 +28,13 @@ function App() {
     setFiveContacts(name);
   };
 
+  const deleteBtn = (id) => {
+    const removedContact = fiveContacts.filter((e) => {
+      return e.id !== id;
+    });
+    setFiveContacts(removedContact);
+  };
+
   return (
     <div>
       <h1>IronContacts</h1>
@@ -41,6 +49,7 @@ function App() {
             <th>Popularity</th>
             <th>Won an Oscar</th>
             <th>Won an Emmy</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -53,6 +62,8 @@ function App() {
               <td>{parseFloat(e.popularity).toFixed(2)}</td>
               {e.wonOscar ? <td>🏆</td> : <td></td>}
               {e.wonEmmy ? <td>🏆</td> : <td></td>}
+              <td><button onClick={()=> deleteBtn(e.id)}>Delete</button>
+              </td>
             </tr>
           ))}
         </tbody>
